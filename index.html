@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dear Dairy</title>
+  <style>
+    /* Reset & Modern Aesthetic Font */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* Atmospheric Background Gradient */
+    body {
+      background-image: 
+        radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0px, transparent 50%),
+        radial-gradient(at 98% 1%, hsla(243, 97%, 85%, 1) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, hsla(339, 49%, 30%, 1) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, hsla(197, 37%, 24%, 1) 0px, transparent 50%);
+      background-size: cover;
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 60px 20px;
+      color: #333;
+    }
+
+    /* Main "Glassmorphism" Container */
+    .container {
+      width: 100%;
+      max-width: 520px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      padding: 35px 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Header Styling */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .header-icon {
+      font-size: 28px;
+    }
+
+    h2 {
+      font-size: 24px;
+      color: #222;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      margin-bottom: 30px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .progress-bar-background {
+      width: 100%;
+      height: 8px;
+      background-color: rgba(0, 0, 0, 0.05);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #34c759, #85e098);
+      border-radius: 10px;
+      transition: width 0.4s ease-out;
+    }
+
+    /* Inputs Group */
+    .input-group {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    input[type="text"] {
+      flex: 2;
+      min-width: 160px;
+      padding: 12px 14px;
+      font-size: 14px;
+      background-color: rgba(0, 0, 0, 0.03);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 8px;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    input[type="text"]:focus {
+      background-color: white;
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+
+    .time-input-wrapper {
+      display: flex;
+      gap: 4px;
+      flex: 1.5;
+      min-width: 120px;
+    }
+
+    input[type="time"] {
+      width: 100%;
+      padding: 12px 8px;
+      font-size: 14px;
+      color: #444;
+      background-color: white;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 8px;
+      outline: none;
+    }
+
+    button.add-btn {
+      padding: 12px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      background-color: #222;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    button.add-btn:hover {
+      background-color: #444;
+      transform: translateY(-1px);
+    }
+
+    /* Task List Items */
+    ul {
+      list-style: none;
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background-color: rgba(0, 0, 0, 0.02);
+      margin-bottom: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    li:hover {
+      background-color: white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .task-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      margin-right: 10px;
+      word-break: break-word;
+    }
+
+    li label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      font-size: 15px;
+      color: #1a1a1a;
+      flex: 1;
+    }
+
+    /* Checkbox Styling */
+    li input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(0, 0, 0, 0.2);
+      border-radius: 6px;
+      background-color: white;
+      cursor: pointer;
+      display: grid;
+      place-content: center;
+      transition: all 0.2s;
+    }
+
+    li input[type="checkbox"]::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      transform: scale(0);
+      transition: 120ms transform ease-in-out;
+      box-shadow: inset 1em 1em #34c759;
+      border-radius: 2px;
+      background-color: CanvasText;
+      clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    }
+
+    li input[type="checkbox"]:checked {
+      border-color: #34c759;
+      background-color: rgba(52, 199, 89, 0.05);
+    }
+
+    li input[type="checkbox"]:checked::before {
+      transform: scale(1);
+    }
+
+    /* Time Badge */
+    .time-badge {
+      font-size: 12px;
+      background: #f1f0ff;
+      color: #6366f1;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* Completed Task Style */
+    li.completed {
+      background-color: rgba(0, 0, 0, 0.02) !important;
+      opacity: 0.6;
+      border-color: transparent !important;
+      box-shadow: none !important;
+    }
+
+    li.completed span {
+      text-decoration: line-through;
+      color: #888;
+    }
+
+    li.completed .time-badge {
+      background-color: rgba(0, 0, 0, 0.05);
+      color: #888;
+    }
+
+    /* Edit & Delete Action Buttons */
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .icon-btn {
+      background: transparent;
+      border: none;
+      font-size: 15px;
+      cursor: pointer;
+      padding: 4px 6px;
+      border-radius: 6px;
+      opacity: 0.6;
+      transition: all 0.2s;
+    }
+
+    .icon-btn:hover {
+      opacity: 1;
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .delete-btn {
+      color: #ff3b30;
+    }
+
+    .delete-btn:hover {
+      background: #ffe5e5;
+    }
+
+    /* Inline Edit Form */
+    .edit-wrapper {
+      display: flex;
+      gap: 6px;
+      width: 100%;
+      align-items: center;
+    }
+
+    .edit-wrapper input[type="text"] {
+      flex: 2;
+      padding: 6px 10px;
+    }
+
+    .edit-wrapper input[type="time"] {
+      flex: 1;
+      padding: 6px;
+    }
+
+    .save-btn {
+      background: #34c759;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 480px) {
+      body { padding: 40px 15px; }
+      .container { padding: 25px 20px; }
+      .input-group { gap: 8px; }
+      input[type="text"] { flex-basis: 100%; }
+      .time-input-wrapper { flex-grow: 1; }
+      button.add-btn { flex-grow: 1; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <span class="header-icon">🌿</span>
+      <h2>Dear Dairy</h2>
+    </div>
+
+    <div class="progress-container">
+      <div class="progress-label">
+        <span>Reality Check</span>
+        <span id="progressText">0%</span>
+      </div>
+      <div class="progress-bar-background">
+        <div class="progress-bar-fill" id="progressBarFill"></div>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <input type="text" id="taskInput" placeholder="Add a ritual or task...">
+      <div class="time-input-wrapper">
+        <input type="time" id="timeInput">
+      </div>
+      <button class="add-btn" onclick="addTask()">Add Task</button>
+    </div>
+
+    <ul id="taskList"></ul>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // UPDATED FIREBASE CONFIGURATION
+    const firebaseConfig = {
+      apiKey: "AIzaSyA18hzy3oQatTTVfjKfHnJWiQP443BOF0c",
+      authDomain: "dairy-91277.firebaseapp.com",
+      projectId: "dairy-91277",
+      storageBucket: "dairy-91277.firebasestorage.app",
+      messagingSenderId: "1038462778806",
+      appId: "1:1038462778806:web:6fd46fd57f1e1b2b965517",
+      measurementId: "G-M2F38Y1J7V"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const tasksCollection = collection(db, "daily_tasks");
+
+    const getTodayString = () => new Date().toISOString().split('T')[0];
+
+    // Format 24-hour time string into 12-hour format with single AM/PM badge
+    const formatDisplayTime = (timeStr) => {
+      if (!timeStr) return "";
+      let [hours, minutes] = timeStr.split(":");
+      let h = parseInt(hours, 10);
+      const ampm = h >= 12 ? "PM" : "AM";
+      h = h % 12 || 12;
+      return `${h}:${minutes} ${ampm}`;
+    };
+
+    // Real-time synchronization stream
+    onSnapshot(tasksCollection, (snapshot) => {
+      const taskList = document.getElementById("taskList");
+      taskList.innerHTML = "";
+      const today = getTodayString();
+
+      const tasks = [];
+      let completedCount = 0;
+
+      snapshot.forEach((docSnap) => {
+        const task = docSnap.data();
+        const taskId = docSnap.id;
+        const isCompletedToday = task.lastCompletedDate === today;
+
+        if (isCompletedToday) completedCount++;
+
+        tasks.push({
+          id: taskId,
+          name: task.name,
+          time: task.time || "",
+          completed: isCompletedToday
+        });
+      });
+
+      // Update progress bar
+      const totalTasks = tasks.length;
+      const percentage = totalTasks === 0 ? 0 : Math.round((completedCount / totalTasks) * 100);
+      document.getElementById("progressBarFill").style.width = percentage + "%";
+      document.getElementById("progressText").innerText = `${percentage}%`;
+
+      // Sorting: Incomplete first (sorted chronologically), Completed at the bottom
+      tasks.sort((a, b) => {
+        if (a.completed !== b.completed) {
+          return Number(a.completed) - Number(b.completed);
+        }
+        return a.time.localeCompare(b.time);
+      });
+
+      // Render tasks
+      tasks.forEach((task) => {
+        const li = document.createElement("li");
+        li.id = `task-${task.id}`;
+        if (task.completed) li.classList.add("completed");
+
+        const formattedTime = formatDisplayTime(task.time);
+
+        li.innerHTML = `
+          <div class="task-content">
+            <label>
+              <input type="checkbox" ${task.completed ? "checked" : ""} onchange="toggleTask('${task.id}', this.checked)">
+              <span>${task.name}</span>
+            </label>
+            ${formattedTime ? `<span class="time-badge">${formattedTime}</span>` : ""}
+          </div>
+          <div class="actions">
+            <button class="icon-btn" onclick="enableEdit('${task.id}', '${task.name.replace(/'/g, "\\'")}', '${task.time}')">✏️</button>
+            <button class="icon-btn delete-btn" onclick="deleteTask('${task.id}')">✕</button>
+          </div>
+        `;
+        taskList.appendChild(li);
+      });
+    });
+
+    // Add Task and clear input fields
+    window.addTask = async () => {
+      const nameInput = document.getElementById("taskInput");
+      const timeInput = document.getElementById("timeInput");
+      const text = nameInput.value.trim();
+      
+      if (!text) return;
+
+      const selectedTime = timeInput.value;
+
+      // Clear fields immediately
+      nameInput.value = "";
+      timeInput.value = "";
+
+      await addDoc(tasksCollection, {
+        name: text,
+        time: selectedTime,
+        lastCompletedDate: null
+      });
+    };
+
+    // Enable Inline Edit Mode
+    window.enableEdit = (id, currentName, currentTime) => {
+      const li = document.getElementById(`task-${id}`);
+      li.innerHTML = `
+        <div class="edit-wrapper">
+          <input type="text" id="edit-name-${id}" value="${currentName}">
+          <input type="time" id="edit-time-${id}" value="${currentTime}">
+          <button class="save-btn" onclick="saveEdit('${id}')">Save</button>
+        </div>
+      `;
+    };
+
+    // Save Edit to Firestore
+    window.saveEdit = async (id) => {
+      const newName = document.getElementById(`edit-name-${id}`).value.trim();
+      const newTime = document.getElementById(`edit-time-${id}`).value;
+
+      if (!newName) return;
+
+      const taskRef = doc(db, "daily_tasks", id);
+      await updateDoc(taskRef, {
+        name: newName,
+        time: newTime
+      });
+    };
+
+    // Enter key support for input field
+    document.getElementById("taskInput").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") window.addTask();
+    });
+
+    // Toggle Task status
+    window.toggleTask = async (id, isChecked) => {
+      const taskRef = doc(db, "daily_tasks", id);
+      await updateDoc(taskRef, {
+        lastCompletedDate: isChecked ? getTodayString() : null
+      });
+    };
+
+    // Delete Task
+    window.deleteTask = async (id) => {
+      await deleteDoc(doc(db, "daily_tasks", id));
+    };
+  </script>
+
+</body>
+</html>
