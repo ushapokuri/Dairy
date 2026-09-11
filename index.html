@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dear Dairy</title>
   <style>
-    /* Reset & Modern Aesthetic Font */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -13,7 +12,6 @@
       font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
-    /* Atmospheric Background Gradient */
     body {
       background-image: 
         radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0px, transparent 50%),
@@ -29,7 +27,6 @@
       color: #333;
     }
 
-    /* Main "Glassmorphism" Container */
     .container {
       width: 100%;
       max-width: 520px;
@@ -42,18 +39,15 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    /* Header Styling */
     .header {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
 
-    .header-icon {
-      font-size: 28px;
-    }
+    .header-icon { font-size: 28px; }
 
     h2 {
       font-size: 24px;
@@ -62,10 +56,38 @@
       letter-spacing: -0.5px;
     }
 
-    /* Progress Bar */
-    .progress-container {
-      margin-bottom: 30px;
+    .tab-bar {
+      display: flex;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.04);
+      padding: 4px;
+      border-radius: 12px;
+      margin-bottom: 25px;
     }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 600;
+      color: #666;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      background: #ffffff;
+      color: #222;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .progress-container { margin-bottom: 30px; }
 
     .progress-label {
       display: flex;
@@ -92,7 +114,102 @@
       transition: width 0.4s ease-out;
     }
 
-    /* Inputs Group */
+    .weekly-report-container {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .report-card {
+      background: rgba(255, 255, 255, 0.6);
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .report-card:hover {
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      transform: translateY(-2px);
+    }
+
+    .report-card-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #333;
+    }
+
+    .report-card-sub {
+      font-size: 11px;
+      color: #777;
+      margin-bottom: 10px;
+    }
+
+    .month-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #6366f1;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .back-btn {
+      background: rgba(0, 0, 0, 0.05);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #4f46e5;
+      cursor: pointer;
+      margin-bottom: 15px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      background: rgba(79, 70, 229, 0.1);
+    }
+
+    .task-stats-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .task-stat-card {
+      background: rgba(255, 255, 255, 0.7);
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .task-stat-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #222;
+    }
+
+    .task-stat-badge {
+      background: #e0e7ff;
+      color: #4338ca;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
     .input-group {
       display: flex;
       gap: 8px;
@@ -122,7 +239,7 @@
       display: flex;
       gap: 4px;
       flex: 1.5;
-      min-width: 120px;
+      min-width: 150px;
     }
 
     input[type="time"] {
@@ -134,6 +251,18 @@
       border: 1px solid rgba(0, 0, 0, 0.08);
       border-radius: 8px;
       outline: none;
+    }
+
+    select.ampm-select {
+      padding: 12px 8px;
+      font-size: 13px;
+      font-weight: 600;
+      background-color: white;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 8px;
+      outline: none;
+      cursor: pointer;
+      color: #4f46e5;
     }
 
     button.add-btn {
@@ -153,10 +282,7 @@
       transform: translateY(-1px);
     }
 
-    /* Task List Items */
-    ul {
-      list-style: none;
-    }
+    ul { list-style: none; }
 
     li {
       display: flex;
@@ -195,7 +321,6 @@
       flex: 1;
     }
 
-    /* Checkbox Styling */
     li input[type="checkbox"] {
       appearance: none;
       -webkit-appearance: none;
@@ -208,6 +333,7 @@
       display: grid;
       place-content: center;
       transition: all 0.2s;
+      flex-shrink: 0;
     }
 
     li input[type="checkbox"]::before {
@@ -227,11 +353,8 @@
       background-color: rgba(52, 199, 89, 0.05);
     }
 
-    li input[type="checkbox"]:checked::before {
-      transform: scale(1);
-    }
+    li input[type="checkbox"]:checked::before { transform: scale(1); }
 
-    /* Time Badge */
     .time-badge {
       font-size: 12px;
       background: #f1f0ff;
@@ -242,7 +365,6 @@
       white-space: nowrap;
     }
 
-    /* Completed Task Style */
     li.completed {
       background-color: rgba(0, 0, 0, 0.02) !important;
       opacity: 0.6;
@@ -260,7 +382,6 @@
       color: #888;
     }
 
-    /* Edit & Delete Action Buttons */
     .actions {
       display: flex;
       align-items: center;
@@ -283,15 +404,9 @@
       background: rgba(0, 0, 0, 0.05);
     }
 
-    .delete-btn {
-      color: #ff3b30;
-    }
+    .delete-btn { color: #ff3b30; }
+    .delete-btn:hover { background: #ffe5e5; }
 
-    .delete-btn:hover {
-      background: #ffe5e5;
-    }
-
-    /* Inline Edit Form */
     .edit-wrapper {
       display: flex;
       gap: 6px;
@@ -320,7 +435,6 @@
       cursor: pointer;
     }
 
-    /* Mobile Responsive */
     @media (max-width: 480px) {
       body { padding: 40px 15px; }
       .container { padding: 25px 20px; }
@@ -340,32 +454,48 @@
       <h2>Dear Dairy</h2>
     </div>
 
-    <div class="progress-container">
-      <div class="progress-label">
-        <span>Reality Check</span>
-        <span id="progressText">0%</span>
-      </div>
-      <div class="progress-bar-background">
-        <div class="progress-bar-fill" id="progressBarFill"></div>
-      </div>
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('daily')">Daily Tasks</button>
+      <button class="tab-btn" onclick="switchTab('weekly')">Weekly Report</button>
     </div>
 
-    <div class="input-group">
-      <input type="text" id="taskInput" placeholder="Add a ritual or task...">
-      <div class="time-input-wrapper">
-        <input type="time" id="timeInput">
+    <div id="dailyTab" class="tab-content active">
+      <div class="progress-container">
+        <div class="progress-label">
+          <span>Reality Check</span>
+          <span id="progressText">0%</span>
+        </div>
+        <div class="progress-bar-background">
+          <div class="progress-bar-fill" id="progressBarFill"></div>
+        </div>
       </div>
-      <button class="add-btn" onclick="addTask()">Add Task</button>
+
+      <div class="input-group">
+        <input type="text" id="taskInput" placeholder="Add a ritual or task...">
+        <div class="time-input-wrapper">
+          <input type="time" id="timeInput">
+          <select id="ampmSelect" class="ampm-select">
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
+        </div>
+        <button class="add-btn" onclick="addTask()">Add Task</button>
+      </div>
+
+      <ul id="taskList"></ul>
     </div>
 
-    <ul id="taskList"></ul>
+    <div id="weeklyTab" class="tab-content">
+      <div class="month-title" id="currentMonthLabel"></div>
+      <div class="weekly-report-container" id="weeklyReportContainer"></div>
+    </div>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // UPDATED FIREBASE CONFIGURATION
+    // NEW FIREBASE CONFIGURATION
     const firebaseConfig = {
       apiKey: "AIzaSyA18hzy3oQatTTVfjKfHnJWiQP443BOF0c",
       authDomain: "dairy-91277.firebaseapp.com",
@@ -380,20 +510,48 @@
     const db = getFirestore(app);
     const tasksCollection = collection(db, "daily_tasks");
 
-    const getTodayString = () => new Date().toISOString().split('T')[0];
+    let activeSelectedWeek = null;
 
-    // Format 24-hour time string into 12-hour format with single AM/PM badge
-    const formatDisplayTime = (timeStr) => {
+    window.switchTab = (tab) => {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+      if (tab === 'daily') {
+        document.querySelectorAll('.tab-btn')[0].classList.add('active');
+        document.getElementById('dailyTab').classList.add('active');
+      } else {
+        document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        document.getElementById('weeklyTab').classList.add('active');
+      }
+    };
+
+    const getTodayString = () => {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    };
+
+    const formatDisplayTime = (timeStr, ampmStr) => {
       if (!timeStr) return "";
       let [hours, minutes] = timeStr.split(":");
       let h = parseInt(hours, 10);
+      
+      if (ampmStr) {
+        h = h % 12 || 12;
+        return `${h}:${minutes} ${ampmStr}`;
+      }
+      
       const ampm = h >= 12 ? "PM" : "AM";
       h = h % 12 || 12;
       return `${h}:${minutes} ${ampm}`;
     };
 
-    // Real-time synchronization stream
-    onSnapshot(tasksCollection, (snapshot) => {
+    let currentSnapshot = null;
+    let latestTasksList = [];
+
+    const renderTasks = (snapshot) => {
       const taskList = document.getElementById("taskList");
       taskList.innerHTML = "";
       const today = getTodayString();
@@ -404,25 +562,27 @@
       snapshot.forEach((docSnap) => {
         const task = docSnap.data();
         const taskId = docSnap.id;
+        
         const isCompletedToday = task.lastCompletedDate === today;
-
         if (isCompletedToday) completedCount++;
 
         tasks.push({
           id: taskId,
           name: task.name,
           time: task.time || "",
-          completed: isCompletedToday
+          ampm: task.ampm || "",
+          completed: isCompletedToday,
+          completionHistory: task.completionHistory || []
         });
       });
 
-      // Update progress bar
+      latestTasksList = tasks;
+
       const totalTasks = tasks.length;
       const percentage = totalTasks === 0 ? 0 : Math.round((completedCount / totalTasks) * 100);
       document.getElementById("progressBarFill").style.width = percentage + "%";
       document.getElementById("progressText").innerText = `${percentage}%`;
 
-      // Sorting: Incomplete first (sorted chronologically), Completed at the bottom
       tasks.sort((a, b) => {
         if (a.completed !== b.completed) {
           return Number(a.completed) - Number(b.completed);
@@ -430,13 +590,12 @@
         return a.time.localeCompare(b.time);
       });
 
-      // Render tasks
       tasks.forEach((task) => {
         const li = document.createElement("li");
         li.id = `task-${task.id}`;
         if (task.completed) li.classList.add("completed");
 
-        const formattedTime = formatDisplayTime(task.time);
+        const formattedTime = formatDisplayTime(task.time, task.ampm);
 
         li.innerHTML = `
           <div class="task-content">
@@ -447,75 +606,259 @@
             ${formattedTime ? `<span class="time-badge">${formattedTime}</span>` : ""}
           </div>
           <div class="actions">
-            <button class="icon-btn" onclick="enableEdit('${task.id}', '${task.name.replace(/'/g, "\\'")}', '${task.time}')">✏️</button>
+            <button class="icon-btn" onclick="enableEdit('${task.id}', '${task.name.replace(/'/g, "\\'")}', '${task.time}', '${task.ampm}')">✏️</button>
             <button class="icon-btn delete-btn" onclick="deleteTask('${task.id}')">✕</button>
           </div>
         `;
         taskList.appendChild(li);
       });
+
+      renderWeeklyReport(tasks);
+    };
+
+    const generateMonthWeeks = (year, month) => {
+      const weeks = [];
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const monthShortNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const monthName = monthShortNames[month];
+
+      let weekStart = 1;
+      let weekNum = 1;
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayOfWeek = new Date(year, month, day).getDay();
+
+        if (dayOfWeek === 6 || day === daysInMonth) {
+          weeks.push({
+            id: weekNum,
+            label: `Week ${weekNum} (${monthName} ${weekStart}–${day})`,
+            start: weekStart,
+            end: day
+          });
+          weekStart = day + 1;
+          weekNum++;
+        }
+      }
+
+      return weeks;
+    };
+
+    window.closeWeekDetails = () => {
+      activeSelectedWeek = null;
+      renderWeeklyReport(latestTasksList);
+    };
+
+    window.showWeekDetails = (week) => {
+      activeSelectedWeek = week;
+      renderWeeklyReport(latestTasksList);
+    };
+
+    const renderWeeklyReport = (tasks) => {
+      const container = document.getElementById("weeklyReportContainer");
+      container.innerHTML = "";
+
+      const now = new Date();
+      const currentMonth = now.getMonth();
+      const currentYear = now.getFullYear();
+      const todayDateNumber = now.getDate();
+
+      const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      document.getElementById("currentMonthLabel").innerText = `${monthNames[currentMonth]} ${currentYear} Report`;
+
+      const weeks = generateMonthWeeks(currentYear, currentMonth);
+
+      if (activeSelectedWeek) {
+        const selectedWeek = weeks.find(w => w.id === activeSelectedWeek.id) || activeSelectedWeek;
+
+        const backBtn = document.createElement("button");
+        backBtn.className = "back-btn";
+        backBtn.innerHTML = "&larr; Back to Weekly Overview";
+        backBtn.onclick = () => window.closeWeekDetails();
+        container.appendChild(backBtn);
+
+        const detailHeader = document.createElement("div");
+        detailHeader.style.marginBottom = "15px";
+        detailHeader.innerHTML = `
+          <h3 style="font-size:16px; font-weight:700;">${selectedWeek.label}</h3>
+          <p style="font-size:12px; color:#666; margin-top:2px;">Tasks done most during this week:</p>
+        `;
+        container.appendChild(detailHeader);
+
+        const taskStats = tasks.map(task => {
+          let count = 0;
+          for (let d = selectedWeek.start; d <= selectedWeek.end; d++) {
+            if (d <= todayDateNumber) {
+              const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+              if (task.completionHistory && task.completionHistory.includes(dateStr)) {
+                count++;
+              }
+            }
+          }
+          return { name: task.name, count };
+        });
+
+        taskStats.sort((a, b) => b.count - a.count);
+
+        const statsList = document.createElement("div");
+        statsList.className = "task-stats-list";
+
+        if (taskStats.length === 0) {
+          statsList.innerHTML = `<p style="font-size:13px; color:#888; text-align:center;">No tasks found.</p>`;
+        } else {
+          taskStats.forEach(item => {
+            const row = document.createElement("div");
+            row.className = "task-stat-card";
+            row.innerHTML = `
+              <span class="task-stat-name">${item.name}</span>
+              <span class="task-stat-badge">Done ${item.count} time${item.count !== 1 ? 's' : ''}</span>
+            `;
+            statsList.appendChild(row);
+          });
+        }
+
+        container.appendChild(statsList);
+        return;
+      }
+
+      const totalPossibleTasksPerDay = tasks.length;
+
+      weeks.forEach((week) => {
+        let weekCompletedCount = 0;
+        let weekElapsedDays = 0;
+
+        if (todayDateNumber >= week.start) {
+          weekElapsedDays = Math.min(todayDateNumber, week.end) - week.start + 1;
+        }
+
+        for (let d = week.start; d <= week.end; d++) {
+          if (d <= todayDateNumber) {
+            const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+
+            tasks.forEach(task => {
+              if (task.completionHistory && task.completionHistory.includes(dateStr)) {
+                weekCompletedCount++;
+              }
+            });
+          }
+        }
+
+        const totalPossibleTasksSoFar = weekElapsedDays * totalPossibleTasksPerDay;
+        const percentage = totalPossibleTasksSoFar === 0 ? 0 : Math.round((weekCompletedCount / totalPossibleTasksSoFar) * 100);
+
+        let statusSubtitle = "";
+        if (todayDateNumber < week.start) {
+          statusSubtitle = "Upcoming week";
+        } else {
+          statusSubtitle = `${weekCompletedCount} / ${totalPossibleTasksSoFar} tasks completed (${weekElapsedDays} day${weekElapsedDays > 1 ? 's' : ''} logged)`;
+        }
+
+        const card = document.createElement("div");
+        card.className = "report-card";
+        card.onclick = () => window.showWeekDetails(week);
+        card.innerHTML = `
+          <div class="report-card-header">
+            <span>${week.label}</span>
+            <span>${percentage}%</span>
+          </div>
+          <div class="report-card-sub">${statusSubtitle}</div>
+          <div class="progress-bar-background">
+            <div class="progress-bar-fill" style="width: ${percentage}%"></div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    };
+
+    onSnapshot(tasksCollection, (snapshot) => {
+      currentSnapshot = snapshot;
+      renderTasks(snapshot);
     });
 
-    // Add Task and clear input fields
+    setInterval(() => {
+      if (currentSnapshot) {
+        renderTasks(currentSnapshot);
+      }
+    }, 15000);
+
     window.addTask = async () => {
       const nameInput = document.getElementById("taskInput");
       const timeInput = document.getElementById("timeInput");
+      const ampmSelect = document.getElementById("ampmSelect");
       const text = nameInput.value.trim();
       
       if (!text) return;
 
       const selectedTime = timeInput.value;
+      const selectedAmPm = ampmSelect.value;
 
-      // Clear fields immediately
       nameInput.value = "";
       timeInput.value = "";
 
       await addDoc(tasksCollection, {
         name: text,
         time: selectedTime,
-        lastCompletedDate: null
+        ampm: selectedAmPm,
+        lastCompletedDate: null,
+        completionHistory: []
       });
     };
 
-    // Enable Inline Edit Mode
-    window.enableEdit = (id, currentName, currentTime) => {
+    window.enableEdit = (id, currentName, currentTime, currentAmPm) => {
       const li = document.getElementById(`task-${id}`);
       li.innerHTML = `
         <div class="edit-wrapper">
           <input type="text" id="edit-name-${id}" value="${currentName}">
           <input type="time" id="edit-time-${id}" value="${currentTime}">
+          <select id="edit-ampm-${id}" class="ampm-select">
+            <option value="AM" ${currentAmPm === 'AM' ? 'selected' : ''}>AM</option>
+            <option value="PM" ${currentAmPm === 'PM' ? 'selected' : ''}>PM</option>
+          </select>
           <button class="save-btn" onclick="saveEdit('${id}')">Save</button>
         </div>
       `;
     };
 
-    // Save Edit to Firestore
     window.saveEdit = async (id) => {
       const newName = document.getElementById(`edit-name-${id}`).value.trim();
       const newTime = document.getElementById(`edit-time-${id}`).value;
+      const newAmPm = document.getElementById(`edit-ampm-${id}`).value;
 
       if (!newName) return;
 
       const taskRef = doc(db, "daily_tasks", id);
       await updateDoc(taskRef, {
         name: newName,
-        time: newTime
+        time: newTime,
+        ampm: newAmPm
       });
     };
 
-    // Enter key support for input field
     document.getElementById("taskInput").addEventListener("keypress", (e) => {
       if (e.key === "Enter") window.addTask();
     });
 
-    // Toggle Task status
     window.toggleTask = async (id, isChecked) => {
+      const today = getTodayString();
       const taskRef = doc(db, "daily_tasks", id);
+
+      let history = [];
+      const docSnap = currentSnapshot.docs.find(d => d.id === id);
+      if (docSnap && docSnap.data().completionHistory) {
+        history = [...docSnap.data().completionHistory];
+      }
+
+      if (isChecked) {
+        if (!history.includes(today)) history.push(today);
+      } else {
+        history = history.filter(date => date !== today);
+      }
+
       await updateDoc(taskRef, {
-        lastCompletedDate: isChecked ? getTodayString() : null
+        lastCompletedDate: isChecked ? today : null,
+        completionHistory: history
       });
     };
 
-    // Delete Task
     window.deleteTask = async (id) => {
       await deleteDoc(doc(db, "daily_tasks", id));
     };
