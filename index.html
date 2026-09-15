@@ -495,7 +495,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // NEW FIREBASE CONFIGURATION
     const firebaseConfig = {
       apiKey: "AIzaSyA18hzy3oQatTTVfjKfHnJWiQP443BOF0c",
       authDomain: "dairy-91277.firebaseapp.com",
@@ -568,11 +567,11 @@
 
         tasks.push({
           id: taskId,
-          name: task.name,
+          name: task.name || "",
           time: task.time || "",
-          ampm: task.ampm || "",
+          ampm: task.ampm || "AM",
           completed: isCompletedToday,
-          completionHistory: task.completionHistory || []
+          completionHistory: Array.isArray(task.completionHistory) ? task.completionHistory : []
         });
       });
 
